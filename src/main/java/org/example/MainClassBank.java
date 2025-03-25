@@ -41,17 +41,17 @@ public class MainClassBank {
     private void show_plan(Customers customer1){
         final Customers customer = new Customers();
 
-          actions.put(DEPOSITE, ()-> customer.deposit(customer1));
+          actions.put(DEPOSIT, ()-> customer.deposit(customer1));
           actions.put(WITHDRAW, ()-> customer.withdraw(customer1));
-          actions.put(SHOWSTOCK, ()-> customer.showStock(customer1));
+          actions.put(SHOW_STOCK, ()-> customer.showStock(customer1));
           actions.put(TRANSFER, ()-> customer.transfer(customer1));
-          actions.put(DISPLAYINFO, ()-> customer.displayInfo(customer1));
-          actions.put(CHANGEPASSWORD, ()-> customer.changePassword(customer1));
+          actions.put(DISPLAY_INFO, ()-> customer.displayInfo(customer1));
+          actions.put(CHANGE_PASSWORD, ()-> customer.changePassword(customer1));
 
         out.println("Select your service: "+ Arrays.toString(services));
         try {
             int personChoice=scanner.nextInt();
-            EnumServices service=EnumServices.findByserciveNumber(personChoice);
+            EnumServices service=EnumServices.findByServiceNumber(personChoice);
             actions.get(service).run();
         }
         catch (IllegalArgumentException e){

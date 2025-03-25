@@ -1,19 +1,19 @@
 package org.example;
 
 public enum EnumServices {
-    DEPOSITE(1),WITHDRAW(2),SHOWSTOCK(3),TRANSFER(4),DISPLAYINFO(5),CHANGEPASSWORD(6);
+    DEPOSIT(1),WITHDRAW(2), SHOW_STOCK(3),TRANSFER(4), DISPLAY_INFO(5), CHANGE_PASSWORD(6);
 
-   private final int serciceNumber;
+   private final int serviceNumber;
     EnumServices(int SN) {
-       serciceNumber=SN;
+       serviceNumber =SN;
     }
 
-    private int getSerciceNumber(){
-        return serciceNumber;
+    private int getServiceNumber(){
+        return serviceNumber;
     }
-    public static EnumServices findByserciveNumber(int number){
+    public static EnumServices findByServiceNumber(int number){
         for (EnumServices service : EnumServices.values()){
-            if (service.getSerciceNumber()==number){
+            if (service.getServiceNumber()==number){
                 return service;
             }
         }
