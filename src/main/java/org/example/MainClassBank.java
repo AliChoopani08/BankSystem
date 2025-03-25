@@ -3,11 +3,13 @@ package org.example;
 import java.util.*;
 import java.util.logging.Logger;
 import static java.lang.System.out;
+import static org.example.EnumServices.*;
 
 public class MainClassBank {
+
     public static final Logger logger= Logger.getLogger(MainClassBank.class.getName());
     private final Scanner scanner=new Scanner(System.in);
-    Map<Integer, Runnable>actions=new HashMap<>();
+    Map<EnumServices, Runnable>actions=new HashMap<>();
 
     private static final String[] services={"1:deposit, ","2:withdraw, ","3:showStock, ","4:transfer, ","5:displayInfo, ","6:changePassword"};
     private boolean haveRequest=true;
@@ -33,23 +35,29 @@ public class MainClassBank {
                     }
                 },
                 ()-> logger.warning("Account there is no!!")
-
         );
     }
 
     private void show_plan(Customers customer1){
         final Customers customer = new Customers();
-        out.println("Select your service: "+ Arrays.toString(services));
-            actions.put(1, ()->customer.deposit(customer1));
-            actions.put(2, ()-> customer.withdraw(customer1));
-            actions.put(3, ()-> customer.showStock(customer1));
-            actions.put(4, ()-> customer.transfer(customer1));
-            actions.put(5, ()-> customer.displayInfo(customer1));
-            actions.put(6, ()-> customer.changePassword(customer1));
-        int choice=scanner.nextInt();
-            actions.getOrDefault(choice, ()-> out.println("Invalid service!!")).run();
-        }
 
+          actions.put(DEPOSITE, ()-> customer.deposit(customer1));
+          actions.put(WITHDRAW, ()-> customer.withdraw(customer1));
+          actions.put(SHOWSTOCK, ()-> customer.showStock(customer1));
+          actions.put(TRANSFER, ()-> customer.transfer(customer1));
+          actions.put(DISPLAYINFO, ()-> customer.displayInfo(customer1));
+          actions.put(CHANGEPASSWORD, ()-> customer.changePassword(customer1));
+
+        out.println("Select your service: "+ Arrays.toString(services));
+        try {
+            int personChoice=scanner.nextInt();
+            EnumServices service=EnumServices.findByserciveNumber(personChoice);
+            actions.get(service).run();
+        }
+        catch (IllegalArgumentException e){
+            logger.warning("Invalid service number entered");
+        }
+    }
         private void continueOrExit() {
             out.println("Do you have another request?  " + " 1:CONTINUE, " + " 2:EXIT");
             int userRequest = scanner.nextInt();

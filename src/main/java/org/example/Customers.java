@@ -28,7 +28,7 @@ public class Customers extends BankActions{
            customer.setAccount_stock(customer.account_stock + user_amount);
             out.println("Deposited amount: " + user_amount);
             logger.info("Remain stock: " + customer.getAccount_stock());
-        customer.transaction.add("Deposited amount: " + user_amount  + " ,, Remain stock: " + customer.getAccount_stock());
+        transaction(customer, "Deposited amount: " + user_amount + " ,, Remain stock: " + customer.getAccount_stock());
         out.println("--------------------------------------");
     }
 
@@ -39,7 +39,7 @@ public class Customers extends BankActions{
            customer.setAccount_stock(customer.account_stock - user_amount);
             out.println("Withdrawal amount: " + user_amount);
             logger.info("Remain stock: " + customer.getAccount_stock());
-        customer.transaction.add("Withdrawal amount: " + user_amount + " ,, Remain stock: " + customer.getAccount_stock());
+        transaction(customer, "Withdrawal amount: " + user_amount + " ,, Remain stock: " + customer.getAccount_stock());
         out.println("-----------------------------------------");
     }
 
@@ -64,8 +64,8 @@ public class Customers extends BankActions{
             logger.info("Move from " + customer.account_owner + " to " + customer2.account_owner + " amount: " + user_amount);
             out.println("Remain from " + customer.account_owner + ": " + customer.getAccount_stock());
             out.println("Remain from " + customer2.account_owner + ": "  + customer2.getAccount_stock());
-           customer.transaction.add("Withdraw to: "+customer2.account_owner + " ,,Withdrawal amount: "+user_amount);
-           customer2.transaction.add("Receive from: "+customer.account_owner + " ,,Deposit amount: "+user_amount);
+            transaction(customer, "Withdraw to: " + customer2.account_owner + " ,,Withdrawal amount: " + user_amount);
+            transaction(customer2, "Receive from: " + customer.account_owner + " ,,Deposit amount: " + user_amount);
         } else {
             logger.warning("Your stock is invalid!");}
         out.println("------------------------------");
@@ -74,6 +74,7 @@ public class Customers extends BankActions{
     @Override
     public void showStock(Customers customers) {
                 out.println(customers.account_owner +" s stock: "+customers.getAccount_stock());
+        out.println("-------------------------------------");
     }
 
     @Override
@@ -83,12 +84,13 @@ public class Customers extends BankActions{
            int newPassword= scanner.nextInt();
                customers.setAccount_password(account_password = newPassword);}
         logger.info(customers.account_owner+" s new password: "+customers.getAccount_password());
-       customers.transaction.add("Change password,  new password: "+customers.getAccount_password());
+        transaction(customers, "Change password,  new password: " + customers.getAccount_password());
     }
 
         @Override
     public void displayInfo(Customers customers) {
         out.println(customers.account_owner+" s display: "+customers.transaction);
+            out.println("------------------------------------");
     }
 
     public void setAccount_password(int account_password) {
@@ -111,6 +113,9 @@ public class Customers extends BankActions{
     }
     public String getAccount_owner() {
         return account_owner;
+    }
+    private static void transaction(Customers customer, String user_amount) {
+        customer.transaction.add(user_amount);
     }
 }
 
